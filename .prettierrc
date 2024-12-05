@@ -5,6 +5,7 @@
   ],
   "importOrder": [
     "^@/lib/(.*)$",
+    "^@/primitives/(.*)$",
     "^@/ui/(.*)$",
     "^@/components/(.*)$",
     "^@/app/(.*)$",
