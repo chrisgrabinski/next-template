@@ -21,13 +21,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ asChild, disabled, loading, onClick, type = "button", ...props }, ref) => {
+  ({ asChild, disabled, loading, onClick, type, ...props }, ref) => {
     const Component = asChild ? Slot : "button";
 
-    const isDisabled = disabled || loading;
+    const defaultButtonType = !asChild ? "button" : undefined;
+
+    const isClickDisabled = disabled || loading;
 
     const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-      if (isDisabled) {
+      if (isClickDisabled) {
         event.preventDefault();
         return;
       }
@@ -37,11 +39,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Component
-        aria-disabled={isDisabled}
+        aria-disabled={disabled}
+        aria-loading={loading}
         data-state={getButtonState({ disabled, loading })}
         onClick={handleClick}
         ref={ref}
-        type={type}
+        type={type || defaultButtonType}
         {...props}
       />
     );

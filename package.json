@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
@@ -21,6 +22,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@playwright/experimental-ct-react": "^1.49.1",
     "@tailwindcss/postcss": "4.0.0-beta.5",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^22.10.1",
