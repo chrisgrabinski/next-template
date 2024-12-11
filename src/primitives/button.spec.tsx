@@ -73,9 +73,6 @@ test("loading state", async ({ mount }) => {
   // Applies state attribute
   await expect(component).toHaveAttribute("data-state", "loading");
 
-  // Accessibility:Applies aria attribute
-  await expect(component).toHaveAttribute("aria-loading", "true");
-
   // Does not perform action on click
   await component.click();
   expect(clicked).toBe(false);
@@ -84,6 +81,7 @@ test("loading state", async ({ mount }) => {
 test("should render as child", async ({ mount }) => {
   const component = await mount(
     <Button asChild>
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
       <a href="/">Click me</a>
     </Button>,
   );

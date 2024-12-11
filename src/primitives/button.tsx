@@ -40,7 +40,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Component
         aria-disabled={disabled}
-        aria-loading={loading}
         data-state={getButtonState({ disabled, loading })}
         onClick={handleClick}
         ref={ref}
