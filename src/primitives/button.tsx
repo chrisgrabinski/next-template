@@ -26,10 +26,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const defaultButtonType = !asChild ? "button" : undefined;
 
-    const isClickDisabled = disabled || loading;
+    const isDisabled = disabled || loading;
 
     const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-      if (isClickDisabled) {
+      if (isDisabled) {
         event.preventDefault();
         return;
       }
@@ -39,7 +39,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Component
-        aria-disabled={disabled}
+        aria-disabled={isDisabled}
         data-state={getButtonState({ disabled, loading })}
         onClick={handleClick}
         ref={ref}

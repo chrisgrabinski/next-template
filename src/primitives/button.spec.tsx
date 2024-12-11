@@ -73,8 +73,11 @@ test("loading state", async ({ mount }) => {
   // Applies state attribute
   await expect(component).toHaveAttribute("data-state", "loading");
 
+  // Accessibility: Applies aria attribute
+  await expect(component).toHaveAttribute("aria-disabled", "true");
+
   // Does not perform action on click
-  await component.click();
+  await component.click({ force: true });
   expect(clicked).toBe(false);
 });
 
