@@ -3,33 +3,21 @@
 import { Slot } from "@radix-ui/react-slot";
 import { ButtonHTMLAttributes, MouseEventHandler, forwardRef } from "react";
 
-const getButtonState = ({
-  disabled,
-  loading,
-}: {
-  disabled?: boolean;
-  loading?: boolean;
-}) => {
-  if (loading) return "loading";
-  if (disabled) return "disabled";
-  return "idle";
-};
-
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
   loading?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ asChild, disabled, loading, onClick, type, ...props }, ref) => {
+  ({ asChild, disabled = false, loading = false, onClick, type, ...props }, ref) => {
     const Component = asChild ? Slot : "button";
 
     const defaultButtonType = !asChild ? "button" : undefined;
 
-    const isDisabled = disabled || loading;
+    const isNonInteractive = disabled || loading;
 
     const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-      if (isDisabled) {
+      if (isNonInteractive) {
         event.preventDefault();
         return;
       }
@@ -39,8 +27,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Component
-        aria-disabled={isDisabled}
-        data-state={getButtonState({ disabled, loading })}
+        aria-busy={loading || undefined}
+        aria-disabled={disabled || undefined}
         onClick={handleClick}
         ref={ref}
         type={type || defaultButtonType}
