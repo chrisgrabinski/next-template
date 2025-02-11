@@ -9,7 +9,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ asChild, disabled = false, loading = false, onClick, type, ...props }, ref) => {
+  (
+    { asChild, disabled = false, loading = false, onClick, type, ...props },
+    ref,
+  ) => {
     const Component = asChild ? Slot : "button";
 
     const defaultButtonType = !asChild ? "button" : undefined;
