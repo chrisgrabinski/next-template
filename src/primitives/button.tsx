@@ -1,14 +1,24 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import { ComponentProps, MouseEventHandler } from "react";
+import { ComponentPropsWithoutRef, MouseEventHandler } from "react";
 
-interface ButtonProps extends ComponentProps<"button"> {
+export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
+  /**
+   * Renders the component as the child element.
+   */
   asChild?: boolean;
+  /**
+   * Sets aria-disabled attribute and prevents interaction with the button.
+   */
+  disabled?: boolean;
+  /**
+   * Sets aria-busy attribute and prevents interaction with the button.
+   */
   loading?: boolean;
 }
 
-const Button = ({
+export const Button = ({
   asChild,
   disabled = false,
   loading = false,
@@ -41,6 +51,3 @@ const Button = ({
     />
   );
 };
-
-export { Button };
-export type { ButtonProps };

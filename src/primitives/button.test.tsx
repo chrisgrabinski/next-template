@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { ComponentProps } from "react";
 
 import { Button } from "./button";
@@ -22,12 +22,14 @@ describe("Button", () => {
     jest.clearAllMocks();
   });
 
-  it("renders default state", () => {
-    renderComponent();
+  it("renders as button with type and props passed down by default", () => {
+    renderComponent({ id: "button-id" });
 
     const buttonElement = screen.getByRole("button", { name: "Click me" });
 
     expect(buttonElement).toHaveAttribute("type", "button");
+
+    expect(buttonElement).toHaveAttribute("id", "button-id");
 
     expect(buttonElement).not.toHaveAttribute("disabled");
     expect(buttonElement).not.toHaveAttribute("aria-busy");
@@ -37,45 +39,79 @@ describe("Button", () => {
     expect(mockOnClick).toHaveBeenCalledTimes(1);
   });
 
-  it("renders loading state", () => {
-    renderComponent({ loading: true });
+  it("renders as child component without type and with props passed down", () => {
+    render(
+      <Button asChild id="button-id" onClick={mockOnClick}>
+        <a href="/">I'm a link</a>
+      </Button>,
+    );
 
-    const buttonElement = screen.getByRole("button", { name: "Click me" });
+    const buttonElement = screen.getByRole("link", { name: "I'm a link" });
 
-    expect(buttonElement).toHaveAttribute("aria-busy", "true");
+    expect(buttonElement).not.toHaveAttribute("type");
 
-    buttonElement.click();
+    expect(buttonElement).toHaveAttribute("id", "button-id");
 
-    expect(mockOnClick).not.toHaveBeenCalled();
-  });
-
-  it("renders disabled state", () => {
-    renderComponent({ disabled: true });
-
-    const buttonElement = screen.getByRole("button", { name: "Click me" });
-
-    expect(buttonElement).not.toHaveAttribute("disabled");
-    expect(buttonElement).toHaveAttribute("aria-disabled", "true");
-
-    buttonElement.click();
-
-    expect(mockOnClick).not.toHaveBeenCalled();
-  });
-
-  it("renders asChild", () => {
-    renderComponent({
-      asChild: true,
-      // eslint-disable-next-line @next/next/no-html-link-for-pages
-      children: <a href="/">Click me</a>,
-    });
-
-    const buttonElement = screen.getByRole("link", { name: "Click me" });
-
-    expect(buttonElement).not.toHaveAttribute("type", "button");
     expect(buttonElement).toHaveAttribute("href", "/");
 
     buttonElement.click();
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders disabled state", () => {
+    renderComponent({ disabled: true });
+
+    const buttonElement = screen.getByRole("button");
+
+    expect(buttonElement).not.toHaveAttribute("disabled");
+    expect(buttonElement).toHaveAttribute("aria-disabled", "true");
+
+    buttonElement.focus();
+
+    expect(buttonElement).toHaveFocus();
+
+    buttonElement.click();
+
+    expect(mockOnClick).not.toHaveBeenCalled();
+  });
+
+  it("renders loading state", () => {
+    renderComponent({ loading: true });
+
+    const buttonElement = screen.getByRole("button");
+
+    expect(buttonElement).toHaveAttribute("aria-busy", "true");
+
+    buttonElement.focus();
+
+    expect(buttonElement).toHaveFocus();
+
+    buttonElement.click();
+
+    expect(mockOnClick).not.toHaveBeenCalled();
+  });
+
+  it("renders both disabled and loading state", () => {
+    renderComponent({ disabled: true, loading: true });
+
+    const buttonElement = screen.getByRole("button");
+
+    expect(buttonElement).toHaveAttribute("aria-disabled", "true");
+    expect(buttonElement).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("overwrites aria attributes for disabled and loading state", () => {
+    renderComponent({
+      disabled: true,
+      loading: true,
+      "aria-disabled": "false",
+      "aria-busy": "false",
+    });
+
+    const buttonElement = screen.getByRole("button");
+
+    expect(buttonElement).toHaveAttribute("aria-disabled", "false");
+    expect(buttonElement).toHaveAttribute("aria-busy", "false");
   });
 });
