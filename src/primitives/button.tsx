@@ -18,6 +18,9 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   loading?: boolean;
 }
 
+/**
+ * An interactive component for performing user actions.
+ */
 export const Button = ({
   asChild,
   disabled = false,
