@@ -3,11 +3,11 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Button } from "./button";
 
 const meta: Meta<typeof Button> = {
-  title: "Primitives/Button",
-  component: Button,
   args: {
     onClick: () => alert("Clicked"),
   },
+  component: Button,
+  title: "Primitives/Button",
 };
 
 export default meta;

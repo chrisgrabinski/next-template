@@ -1,6 +1,6 @@
-import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 const dirname =
@@ -20,13 +20,13 @@ export default defineConfig({
           storybookTest({ configDir: path.join(dirname, ".storybook") }),
         ],
         test: {
-          name: "storybook",
           browser: {
             enabled: true,
             headless: true,
-            provider: "playwright",
             instances: [{ browser: "chromium" }],
+            provider: "playwright",
           },
+          name: "storybook",
           setupFiles: [".storybook/vitest.setup.ts"],
         },
       },

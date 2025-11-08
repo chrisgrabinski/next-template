@@ -1,9 +1,8 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import { ComponentPropsWithoutRef, MouseEventHandler } from "react";
 
-export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
+export interface ButtonProps extends React.ComponentProps<"button"> {
   /**
    * Renders the component as the child element.
    */
@@ -35,7 +34,7 @@ export const Button = ({
 
   const isNonInteractive = disabled || loading;
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     if (isNonInteractive) {
       event.preventDefault();
       return;

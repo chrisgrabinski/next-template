@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { ComponentProps } from "react";
+import { render, screen } from "@testing-library/react";
+import type { ComponentProps } from "react";
 
 import { Button } from "./button";
 
@@ -103,10 +103,10 @@ describe("Button", () => {
 
   it("overwrites aria attributes for disabled and loading state", () => {
     renderComponent({
+      "aria-busy": "false",
+      "aria-disabled": "false",
       disabled: true,
       loading: true,
-      "aria-disabled": "false",
-      "aria-busy": "false",
     });
 
     const buttonElement = screen.getByRole("button");

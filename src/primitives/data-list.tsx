@@ -2,9 +2,9 @@
 
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import { Slot, Slottable } from "@radix-ui/react-slot";
-import { ChevronDownIcon, XIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import {
-  ComponentPropsWithRef,
+  type ComponentPropsWithRef,
   createContext,
   useContext,
   useState,
@@ -93,8 +93,8 @@ const DataListSub = ({
   return (
     <DataListSubContext.Provider value={{ open: openState }}>
       <CollapsiblePrimitive.Root
-        open={openState}
         onOpenChange={handleOpenChange}
+        open={openState}
         {...props}
       >
         {children}
@@ -138,7 +138,7 @@ const DataListSubIndicator = ({
     return <Slot {...stateProps} />;
   }
 
-  return <ChevronDownIcon {...stateProps} />;
+  return <ChevronDownIcon {...stateProps} {...props} />;
 };
 
 const DataListSubContent = ({
